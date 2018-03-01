@@ -16,7 +16,7 @@ To submit bug reports and feature suggestions, or to track changes:
 -- INSTALLATION --
 
 1. Execute 'composer update' from the site's root directory (this will download
-   the line-bot-sdk-php sdk.
+   the line-bot-sdk-php sdk).
 
 2. Install the module as usual, see http://drupal.org/node/70151 for further
    information.

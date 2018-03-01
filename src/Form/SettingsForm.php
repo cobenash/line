@@ -60,9 +60,9 @@ class SettingsForm extends ConfigFormBase {
 
     $form['bot_on'] = [
       '#type' => 'checkbox',
-      '#title' => t('Activate LINE SDK Messaging API.'),
+      '#title' => t('Activate LINE Messaging API.'),
       '#default_value' => $config->get('bot_on'),
-      '#description' => t('When enabled, LINE SDK will be available to use in your modules.'),
+      '#description' => t('When enabled, LINE Messaging API will be available to use in your modules.'),
     ];
 
     if (!$config->get('bot_on') && empty($form_state->input)) {
@@ -81,7 +81,7 @@ class SettingsForm extends ConfigFormBase {
     // Check to see if the module has been activated or inactivated.
     if ($values['bot_on']) {
       if (!line_active()) {
-        drupal_set_message(t('LINE SKD is ready to use in your modules.'));
+        drupal_set_message(t('LINE Messaging API is ready to use in your modules.'));
         \Drupal::logger('line')->notice('LINE has been enabled.');
       }
     }

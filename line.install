@@ -11,11 +11,10 @@
 function line_requirements($phase) {
   $requirements = [];
 
-  if (class_exists('LINEBot')) {
-    $bot = new LINEBot();
+  if (class_exists('\LINE\LINEBot')) {
+    return $requirements;
   }
-
-  if (empty($bot)) {
+  else {
     $requirements['line'] = [
       'title' => (string) t('LINE SDK'),
       'value' => (string) t('Missing'),
