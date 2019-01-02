@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_requirements().
+ * Implements hook_requirements().
  */
 function line_requirements($phase) {
   $requirements = [];
@@ -27,7 +27,7 @@ function line_requirements($phase) {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function line_install() {
   if (!line_active()) {
@@ -36,7 +36,7 @@ function line_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function line_uninstall() {
   if (line_active()) {
