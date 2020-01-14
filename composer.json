@@ -5,7 +5,7 @@
   "homepage": "https://drupal.org/project/line",
   "license": "GPL-2.0+",
   "require": {
-    "linecorp/line-bot-sdk": "^4.0.0"
+    "linecorp/line-bot-sdk": "^4.1"
   },
   "authors": [
     {
