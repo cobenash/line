@@ -1,0 +1,18 @@
+line.message_api.*:
+  type: config_entity
+  label: 'LINE Message API config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    clientid:
+      type: string
+      label: 'Client ID'
+    secret:
+      type: string
+      label: 'Client Secret'

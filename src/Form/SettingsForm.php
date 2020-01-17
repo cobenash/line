@@ -6,6 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
 /**
  * Defines a form that configures line settings.
@@ -20,13 +21,23 @@ class SettingsForm extends ConfigFormBase {
   protected $languageManager;
 
   /**
+   * The logger channel factory.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
+   */
+  protected $loggerFactory;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
+   *   The logger factory.
    */
-  public function __construct(LanguageManagerInterface $language_manager) {
+  public function __construct(LanguageManagerInterface $language_manager, LoggerChannelFactoryInterface $logger_factory) {
     $this->languageManager = $language_manager;
+    $this->loggerFactory = $logger_factory;
   }
 
   /**
@@ -34,7 +45,8 @@ class SettingsForm extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('language_manager')
+      $container->get('language_manager'),
+      $container->get('logger.factory')
     );
   }
 
@@ -60,13 +72,13 @@ class SettingsForm extends ConfigFormBase {
 
     $form['bot_on'] = [
       '#type' => 'checkbox',
-      '#title' => t('Activate LINE Messaging API.'),
+      '#title' => $this->t('Activate LINE Messaging API.'),
       '#default_value' => $config->get('bot_on'),
-      '#description' => t('When enabled, LINE Messaging API will be available to use in your modules.'),
+      '#description' => $this->t('When enabled, LINE Messaging API will be available to use in your modules.'),
     ];
 
     if (!$config->get('bot_on') && empty($form_state->input)) {
-      drupal_set_message(t('LINE is currently disabled.'), 'warning');
+      drupal_set_message($this->t('LINE is currently disabled.'), 'warning');
     }
 
     return parent::buildForm($form, $form_state);
@@ -81,14 +93,14 @@ class SettingsForm extends ConfigFormBase {
     // Check to see if the module has been activated or inactivated.
     if ($values['bot_on']) {
       if (!line_active()) {
-        drupal_set_message(t('LINE Messaging API is ready to use in your modules.'));
-        \Drupal::logger('line')->notice('LINE has been enabled.');
+        drupal_set_message($this->t('LINE Messaging API is ready to use in your modules.'));
+        $this->loggerFactory->get('line')->notice('LINE has been enabled.');
       }
     }
     elseif (line_active()) {
       // This module is active and is being inactivated.
-      drupal_set_message(t('LINE has been disabled.'));
-      \Drupal::logger('line')->notice('LINE has been disabled.');
+      drupal_set_message($this->t('LINE has been disabled.'));
+      $this->loggerFactory->get('line')->notice('LINE has been disabled.');
     }
 
     // Save the configuration changes.

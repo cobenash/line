@@ -1,0 +1,10 @@
+entity.message_api.add_form:
+  route_name: entity.message_api.add_form
+  title: 'Add Line Message API'
+  appears_on:
+    - entity.message_api.collection
+entity.message_api.add_form:
+  route_name: entity.message_api.add_form
+  title: 'Add LINE Message API'
+  appears_on:
+    - entity.message_api.collection

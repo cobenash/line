@@ -3,3 +3,11 @@ line.settings:
   route_name: line.settings
   parent: system.admin_config_system
   description: "Configure the LINE module's settings."
+
+# LINE Message API menu items definition
+entity.message_api.collection:
+  title: 'LINE Message API'
+  route_name: entity.message_api.collection
+  description: 'List LINE Message API (bundles)'
+  parent: system.admin_structure
+  weight: 99
