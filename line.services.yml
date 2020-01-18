@@ -1,0 +1,7 @@
+services:
+  logger.channel.line:
+    parent: logger.channel_base
+    arguments: ['line']
+  line.message_api:
+    class: Drupal\line\MessageApiService
+    arguments: []
