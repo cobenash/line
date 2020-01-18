@@ -31,7 +31,8 @@ To submit bug reports and feature suggestions, or to track changes:
   configuration >> LINE.
 
 ## ROADMAP
-1. Create Message API config entities, and allow the website can integrate with multiple LINE ChatBot.
+1. Create Message API config entities, and allow the website can integrate 
+   with multiple LINE ChatBot.
 2. Generate webhookl url for each message api config entities.
 3. Provide response message function for each message api config entity.
 4. Provide Multiple Message format.
