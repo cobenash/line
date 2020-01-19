@@ -2,6 +2,7 @@
 
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 namespace Drupal\line;
 
@@ -11,21 +12,36 @@ namespace Drupal\line;
 class MessageApiService implements MessageApiServiceInterface {
 
   /**
-   * Constructs a new MessageApiService object.
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  public function __construct() {
+  protected $entityTypeManager;
 
+  /**
+   * Constructs a new MessageApiService object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager')
+    );
   }
 
   /**
    * This is the function provides connecting with line api.
-   *
-   * @param [type] $machineId
-   *
-   * @return void
    */
-  public function LineConnect($machineId) {
-    $configEntity = \Drupal::entityTypeManager()->getStorage('message_api')->load($machineId);
+  public function getLineConnect($machineId) {
+    $configEntity = $this->entityTypeManager->getStorage('message_api')->load($machineId);
     $clientId = $configEntity->getClientId();
     $clientSecret = $configEntity->getSecret();
     $httpClient = new CurlHTTPClient($clientSecret);
